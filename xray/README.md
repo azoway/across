@@ -3,9 +3,9 @@
 * 参考：[xray](https://github.com/XTLS/Xray-examples)  &&  [lxhao61](https://github.com/lxhao61/integrated-examples)
 * 安装:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/azples/across/main/xray/xray_whatever_uuid.sh) my.domain.com
+bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/xray/xray_whatever_uuid.sh) my.domain.com
 ```
 * 卸载:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/azples/across/main/xray/xray_whatever_uuid.sh) remove_purge
+bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/xray/xray_whatever_uuid.sh) remove_purge
 ```

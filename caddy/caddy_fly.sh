@@ -12,8 +12,8 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 
 function _install(){
     # caddy with layer4 cloudflare-dns naiveproxy caddy-trojan: https://github.com/azples/caddys
-    caddyURL="$(wget -qO-  https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
-    naivecaddyURL="https://github.com/azples/caddys/releases/download/latest/caddy_$(dpkg --print-architecture).tar.gz"
+    caddyURL="$(wget -qO- https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
+    naivecaddyURL="$(wget -qO- https://api.github.com/repos/lxhao61/integrated-examples/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.tar.gz" | cut -f4 -d\" | head -n1)"
     wget -O $TMPFILE $caddyURL && dpkg -i $TMPFILE
     wget -4 -O $TMPFILE $naivecaddyURL && tar -zxf $TMPFILE -C /usr/bin && chmod +x /usr/bin/caddy
 }

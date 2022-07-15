@@ -11,9 +11,9 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 ########
 
 function install_xray_caddy(){
-    # caddy with layer4 cloudflare-dns naiveproxy: https://github.com/azples/caddys
-    caddyURL="$(wget -qO-  https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
-    naivecaddyURL="https://github.com/azples/caddys/releases/download/latest/caddy_$(dpkg --print-architecture).tar.gz"
+    # caddy with layer4 cloudflare-dns naiveproxy: https://github.com/azoway/caddys
+    caddyURL="$(wget -qO- https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
+    naivecaddyURL="$(wget -qO- https://api.github.com/repos/lxhao61/integrated-examples/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.tar.gz" | cut -f4 -d\" | head -n1)"
     wget -O $TMPFILE $caddyURL && dpkg -i $TMPFILE
     wget -4 -O $TMPFILE $naivecaddyURL && tar -zxf $TMPFILE -C /usr/bin && chmod +x /usr/bin/caddy
     sed -i -e "s/caddy\/Caddyfile$/caddy\/Caddyfile\.json/g" /lib/systemd/system/caddy.service && systemctl daemon-reload && systemctl restart caddy
