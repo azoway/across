@@ -1,0 +1,76 @@
+{
+    "admin": {"disabled": true},
+    "apps": {
+        "http": {
+            "servers": {
+                "srv0": {"listen": [":80"],"routes": [{"handle": [{"handler": "subroute","routes": [{"handle": [{"handler": "static_response","headers": {"Location": ["https://{http.request.host}{http.request.uri}"]},"status_code": 301}]}]}],"terminal": true}]},
+                "srv1": {
+                    "listen": ["127.0.0.1:50080"],
+                    "routes": 
+                    [
+                        {
+                            "handle": [{
+                                "handler": "forward_proxy",
+                                "hide_ip": true,
+                                "hide_via": true,
+                                "auth_user_deprecated": "$uuid",
+                                "auth_pass_deprecated": "$uuid",
+                                "probe_resistance": {"domain": "$uuid.com"},
+                                "upstream": "socks5://$uuid:$uuid@127.0.0.1:59876"
+                            }]
+                        },
+                        {
+                            "handle": [{
+                                "handler": "subroute",
+                                "routes": [
+                                    {
+                                        "match": [{"path": ["/$vlessh2path"]}],
+                                        "handle": [{
+                                          "handler": "reverse_proxy",
+                                          "transport": {
+                                            "protocol": "http",
+                                            "keep_alive": {
+                                              "enabled": false
+                                            },
+                                            "versions": ["h2c"]
+                                          },
+                                          "upstreams": [{
+                                            "dial": "127.0.0.1:50001"
+                                          }]
+                                        }],
+                                        "terminal": true
+                                    },
+                                    {
+                                        "match": [{"path": ["/$vmessh2path"]}],
+                                        "handle": [{
+                                          "handler": "reverse_proxy",
+                                          "transport": {
+                                            "protocol": "http",
+                                            "keep_alive": {
+                                              "enabled": false
+                                            },
+                                            "versions": ["h2c"]
+                                          },
+                                          "upstreams": [{
+                                            "dial": "127.0.0.1:50002"
+                                          }]
+                                        }],
+                                        "terminal": true
+                                    }
+                                ]
+                            }]
+                        },
+                        {
+                            "handle": [{
+                                "handler": "file_server",
+                                "root": "/usr/share/caddy"
+                            }],
+                            "terminal": true
+                        }
+                    ],
+                    "allow_h2c": true
+                }
+            }
+        }
+    }
+}
