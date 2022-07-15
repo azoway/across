@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Wiki: https://github.com/p4gefau1t/trojan-go
-# Usage: bash <(curl -s https://raw.githubusercontent.com/tdcnull/across/main/trojan-go/trojan-go-acme-cloudflare.sh) my.domain.com CF_Key CF_Email
+# Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/trojan-go/trojan-go-acme-cloudflare.sh) my.domain.com CF_Key CF_Email
 ## one key install trojan-go with acme and cloudflareApi
 ## Uninstall: /root/.acme.sh/acme.sh --uninstall; systemctl stop trojan-go.service; systemctl disable trojan-go.service; rm -rf /etc/systemd/system/trojan-go.service /usr/bin/trojan-go /etc/trojan-go
 ### 如不启用cloudflare cdn，脚本运行前需要关闭cloudflare的小云朵

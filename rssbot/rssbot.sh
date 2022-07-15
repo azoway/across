@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Wiki: https://github.com/iovxw/rssbot https://github.com/nadam/userinfobot https://core.telegram.org/bots#3-how-do-i-create-a-bot
-# Usage: bash <(curl -s https://raw.githubusercontent.com/tdcnull/across/main/rssbot/rssbot.sh) --single-user <userid> <token>
+# Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/rssbot/rssbot.sh) --single-user <userid> <token>
 # Uninstall: systemctl stop rssbot; systemctl disable rssbot; rm -rf /etc/systemd/system/rssbot.service /usr/bin/rssbot
 
 [[ $# != 0 ]] && METHOD=$(echo $@) || exit 1

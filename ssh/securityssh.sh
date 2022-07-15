@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage:
-#   bash <(wget -qO- https://raw.githubusercontent.com/azples/across/main/ssh/securityssh.sh)
+#   bash <(wget -qO- https://raw.githubusercontent.com/azoway/across/main/ssh/securityssh.sh)
 
 # only root can run this script
 [[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1

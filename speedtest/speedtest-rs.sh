@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Wiki: https://github.com/zhanghanyun/speedtest-rs
-# Usage: bash <(curl -s https://raw.githubusercontent.com/tdcnull/across/main/speedtest/speedtest-rs.sh) my.domain.com
+# Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/speedtest/speedtest-rs.sh) my.domain.com
 # Uninstall: apt purge caddy -y; systemctl stop speedtest-rs; systemctl disable speedtest-rs; rm -rf /etc/systemd/system/speedtest-rs.service /usr/bin/speedtest-rs
 
 # tempfile & rm it when exit

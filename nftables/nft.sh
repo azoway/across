@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: bash <(curl -s https://raw.githubusercontent.com/azples/across/main/nftables/nft.sh)
+# Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/nftables/nft.sh)
 # Wiki: debian buster nftables https://wiki.archlinux.org/index.php/Nftables
 
 # dependencies

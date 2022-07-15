@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Wiki: https://docs.ginuerzh.xyz/gost/
-# Usage: bash <(curl -s https://raw.githubusercontent.com/tdcnull/across/main/gost/gost.sh) -L=:8080
+# Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/gost/gost.sh) -L=:8080
 # Uninstall: systemctl stop gost; systemctl disable gost; rm -rf /etc/systemd/system/gost.service /usr/bin/gost
 
 [[ $# != 0 ]] && METHOD=$(echo $@) || METHOD="-L=ss://AEAD_AES_128_GCM:$(tr -dc 'a-z0-9A-Z' </dev/urandom | head -c 16)@:$(shuf -i 10000-65535 -n1)"
