@@ -20,6 +20,8 @@ function _install(){
 function _config(){
     cat <<EOF >/etc/caddy/Caddyfile
 {
+	order trojan before route
+	order forward_proxy before trojan
     admin off
     servers :443 {
         listener_wrappers {
@@ -35,18 +37,15 @@ function _config(){
 }
 
 :443, $domain {
-    @connect method CONNECT
-    route @connect {
-        trojan {
-            connect_method
-            websocket
-        }
-        forward_proxy {
-            basic_auth $uuid $uuid
-            hide_ip
-            hide_via
-            probe_resistance $uuid.com
-        }
+    forward_proxy {
+        basic_auth $uuid $uuid
+        hide_ip
+        hide_via
+        probe_resistance $uuid.com
+    }
+    trojan {
+        connect_method
+        websocket
     }
     @host host $domain
     route @host {
