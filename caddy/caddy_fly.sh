@@ -12,7 +12,7 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 
 function _install(){
     caddyURL="$(wget -qO- https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
-    naivecaddyURL="$(wget -qO- https://api.github.com/repos/lxhao61/integrated-examples/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.tar.gz" | cut -f4 -d\" | head -n1)"
+    naivecaddyURL="$(wget -qO- https://api.github.com/repos/lxhao61/integrated-examples/releases | grep -E "browser_download_url.*linux-$(dpkg --print-architecture)\.tar.gz" | cut -f4 -d\" | head -n1)"
     wget -O $TMPFILE $caddyURL && dpkg -i $TMPFILE
     wget -4 -O $TMPFILE $naivecaddyURL && tar -zxf $TMPFILE -C /usr/bin && chmod +x /usr/bin/caddy
 }
@@ -25,10 +25,7 @@ function _config(){
         listener_wrappers {
             trojan
         }
-        protocol {
-            allow_h2c
-            experimental_http3
-        }
+        protocols h1 h2c h2
     }
     trojan {
         caddy
