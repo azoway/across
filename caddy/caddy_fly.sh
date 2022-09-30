@@ -20,8 +20,8 @@ function _install(){
 function _config(){
     cat <<EOF >/etc/caddy/Caddyfile
 {
-	order trojan before route
-	order forward_proxy before trojan
+    order trojan before route
+    order forward_proxy before trojan
     admin off
     servers :443 {
         listener_wrappers {
