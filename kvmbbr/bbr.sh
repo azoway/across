@@ -10,11 +10,11 @@
 [[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1
 
 # version stretch || buster
-version=$(cat /etc/os-release | grep -oE "VERSION_ID=\"(9|10)\"" | grep -oE "(9|10)")
-if [[ $version == "9" ]]; then
-    backports_version="stretch-backports-sloppy"
+version=$(cat /etc/os-release | grep -oE "VERSION_ID=\"(11|10)\"" | grep -oE "(11|10)")
+if [[ $version == "11" ]]; then
+    backports_version="bullseye-backports"
 else
-    [[ $version != "10" ]] && echo "Error, OS should be debian stretch or buster " && exit 1 || backports_version="buster-backports"
+    [[ $version != "10" ]] && echo "Error, OS should be debian bullseye or buster " && exit 1 || backports_version="buster-backports"
 fi
 
 # install cloud kernel 
