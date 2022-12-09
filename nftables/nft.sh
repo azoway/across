@@ -3,7 +3,7 @@
 # Wiki: debian buster nftables https://wiki.archlinux.org/index.php/Nftables
 
 # dependencies
-command -v nft > /dev/null 2>&1 || { echo >&2 "Please install nftables： apt update && apt -t buster-backports install nftables -y"; exit 1; }
+command -v nft > /dev/null 2>&1 || { echo >&2 "Please install nftables"; exit 1; }
 
 # nftables
 cat <<EOF > /etc/nftables.conf
@@ -28,7 +28,7 @@ table inet my_table {
         icmp type echo-request limit rate over 1/second counter drop
         icmp type echo-request counter accept
         icmpv6 type {echo-request, nd-neighbor-solicit} limit rate over 1/second counter drop
-        icmpv6 type {echo-request, nd-neighbor-solicit} counter accept
+        icmpv6 type {echo-request,nd-neighbor-solicit,nd-neighbor-advert,nd-router-solicit,nd-router-advert,mld-listener-query,destination-unreachable,packet-too-big,time-exceeded,parameter-problem} counter accept
         
         ct state {established, related} counter accept
         ct state invalid counter drop
