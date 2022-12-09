@@ -3,7 +3,7 @@
 # Wiki: debian buster nftables https://wiki.archlinux.org/index.php/Nftables
 
 # dependencies
-command -v nft > /dev/null 2>&1 || { echo >&2 "Please install nftables： apt update && apt -t buster-backports install nftables -y"; exit 1; }
+command -v nft > /dev/null 2>&1 || { echo >&2 "Please install nftables"; exit 1; }
 
 # nftables
 cat <<EOF > /etc/nftables.conf
@@ -24,7 +24,8 @@ define SAFE_TRAFFIC_IPS = {
     197.234.240.0/22,
     198.41.128.0/17,
     162.158.0.0/15,
-    104.16.0.0/12,
+    104.16.0.0/13,
+    104.24.0.0/14,
     172.64.0.0/13,
     131.0.72.0/22
 }
