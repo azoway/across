@@ -1,4 +1,4 @@
-### Some scripts collection  for Debian
+### Some scripts collection  for [Debian stable](https://www.debian.org/releases/)
 ```bash
 apt update && apt install apt-transport-https ca-certificates curl vim wget -y
 ```  
