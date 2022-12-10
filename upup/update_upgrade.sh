@@ -43,7 +43,7 @@ function _version(){
             [[ "${dic_d[$key]}" = "$next_ver" ]] && stable_version="$key" && stable_versnum=$(echo ${dic_d[$key]})
         done
         echo Debian $this_versnum can be upgraded - debian $stable_versnum - $stable_version
-    else [[ $x_versnum == 1 ]]; then
+    else
         echo Debian $this_versnum can be upgraded to a stable release - debian $stable_versnum - $stable_version
     fi
 }
