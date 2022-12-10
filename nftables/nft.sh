@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage: bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/nftables/nft.sh)
-# Wiki: debian buster nftables https://wiki.archlinux.org/index.php/Nftables
+# Wiki: debian nftables https://wiki.archlinux.org/index.php/Nftables
 
 # dependencies
 command -v nft > /dev/null 2>&1 || { echo >&2 "Please install nftables"; exit 1; }
