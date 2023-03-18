@@ -11,8 +11,8 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 ########
 
 function _install(){
-    apt update
-    apt install caddy -y
+    caddyURL="$(wget -qO- https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
+    wget -O $TMPFILE $caddyURL && dpkg -i $TMPFILE
     caddy add-package github.com/imgk/caddy-trojan
 }
 
