@@ -15,7 +15,7 @@ bash <(curl -s https://raw.githubusercontent.com/azoway/across/master/xtls/xtls_
 加上伪装域名(默认www.amazon.com)：
 bash <(curl -s https://raw.githubusercontent.com/azoway/across/master/xtls/xtls_fly.sh) domain@my.domain.com fk@www.amazon.com
 
-加上privateKey(默认由 `xray x25519` 命令生成)：
+加上privateKey(默认由 xray x25519 命令生成)：
 bash <(curl -s https://raw.githubusercontent.com/azoway/across/master/xtls/xtls_fly.sh) domain@my.domain.com pk@YGSafufMK-803V3RH5j4dkGzTR_WT8-QSObNSBlqr3Y
 ```
 * 卸载:
