@@ -11,20 +11,20 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 ########
 
 function _install(){
-    bash <(curl -s https://raw.githubusercontent.com/HyNetwork/hysteria/master/install_server.sh)
+    bash <(curl -s https://raw.githubusercontent.com/HyNetwork/hysteria/master/scripts/install_server.sh)
 }
 
 function _config(){
-    cat <<EOF >/etc/hysteria/config.json
-{
-  "listen": ":443",
-  "acme": {
-    "domains": [
-      "$domain"
-    ]
-  },
-  "obfs": "$uuid"
-}
+    cat <<EOF >/etc/hysteria/config.yaml
+acme:
+  domains:
+    - $domain
+  email: admin@$domain 
+
+auth:
+  type: password
+  userpass:
+    $uuid: $uuid
 EOF
 }
 
@@ -32,8 +32,7 @@ function _info(){
     systemctl enable hysteria-server && systemctl restart hysteria-server && sleep 3 && systemctl status hysteria-server | grep -A 2 "service" | tee $TMPFILE
     cat <<EOF >$TMPFILE
 $(date)
-obfs: $uuid
-$domain
+server: hysteria2://$uuid:$uuid@$domain
 EOF
     cat $TMPFILE | tee /var/log/${TMPFILE##*/} && echo && echo $(date) Info saved: /var/log/${TMPFILE##*/}
 }
