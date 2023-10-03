@@ -99,7 +99,7 @@ function _config(){
 EOF
 
     # caddy json config
-    cat <<EOF >/etc/caddy/Caddyfile
+    cat <<EOF >/etc/caddy/Caddyfile.json
 {
 	"admin": {
 		"disabled": true
