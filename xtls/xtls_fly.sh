@@ -79,7 +79,7 @@ function _config(){
 				}
 			}
 		},
-        {"listen": "@xray.sock","protocol": "socks","settings": {"udp": true}}
+        {"port": 59876,"listen": "127.0.0.1","protocol": "socks","settings": {"auth": "password","accounts": [{"user": "$uuid","pass": "$uuid"}],"udp": true}}
 	],
     "outbounds": 
     [
@@ -164,7 +164,7 @@ EOF
 									"probe_resistance": {
 										"domain": "$uuid.com"
 									},
-                                    "upstream": "unix/@xray.sock"
+                                    "upstream": "socks5://$uuid:$uuid@127.0.0.1:59876"
 								},
 								{
 									"connect_method": true,
