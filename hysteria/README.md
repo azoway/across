@@ -6,5 +6,5 @@ bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/hysteria/hys
 ```
 * 卸载:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/HyNetwork/hysteria/master/scripts/install_server.sh) --remove
+bash <(curl -s https://raw.githubusercontent.com/apernet/hysteria/master/scripts/install_server.sh) --remove
 ```
