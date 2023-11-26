@@ -26,7 +26,11 @@ acme:
 auth:
   type: password
   userpass:
-    $uuid
+    $uuid:$uuid
+
+bandwidth:
+  up: 0
+  down: 0
 
 masquerade:
   type: file
