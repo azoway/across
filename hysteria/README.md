@@ -2,7 +2,7 @@
 * [hysteria](https://github.com/HyNetwork/hysteria)
 * 安装:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/HyNetwork/hysteria/master/scripts/install_server.sh) my.domain.com 
+bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/hysteria/hysteria.sh) my.domain.com 
 ```
 * 卸载:
 ```bash
