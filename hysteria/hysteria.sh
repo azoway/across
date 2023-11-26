@@ -11,7 +11,9 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 ########
 
 function _install(){
-    bash <(curl -s https://raw.githubusercontent.com/HyNetwork/hysteria/master/scripts/install_server.sh)
+    bash <(curl -s https://raw.githubusercontent.com/apernet/hysteria/master/scripts/install_server.sh)
+    mkdir /etc/hysteria_caddy
+    wget -O /etc/hysteria_caddy/index.html https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html
 }
 
 function _config(){
@@ -24,7 +26,15 @@ acme:
 auth:
   type: password
   userpass:
-    $uuid: $uuid
+    $uuid
+
+masquerade:
+  type: file
+  file:
+    dir: /etc/hysteria_caddy
+  listenHTTP: :80 
+  listenHTTPS: :443 
+  forceHTTPS: true
 EOF
 }
 
