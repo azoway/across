@@ -45,7 +45,7 @@ function _info(){
     systemctl enable hysteria-server && systemctl restart hysteria-server && sleep 3 && systemctl status hysteria-server | grep -A 2 "service" | tee $TMPFILE
     cat <<EOF >$TMPFILE
 $(date)
-server: hysteria2://$uuid:$uuid@$domain
+server: hy2://$uuid@$domain:443#$domain
 EOF
     cat $TMPFILE | tee /var/log/${TMPFILE##*/} && echo && echo $(date) Info saved: /var/log/${TMPFILE##*/}
 }
