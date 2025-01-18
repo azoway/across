@@ -12,9 +12,11 @@ trap 'rm -f "$TMPFILE"' EXIT; TMPFILE=$(mktemp) || exit 1
 
 function _install(){
     caddyURL="$(wget -qO- https://api.github.com/repos/caddyserver/caddy/releases | grep -E "browser_download_url.*linux_$(dpkg --print-architecture)\.deb" | cut -f4 -d\" | head -n1)"
-    naivecaddyURL="https://caddyserver.com/api/download?os=linux&arch=$(dpkg --print-architecture)&p=github.com%2Fcaddy-dns%2Fcloudflare&p=github.com%2Fmholt%2Fcaddy-l4&p=github.com%2Fimgk%2Fcaddy-trojan&p=github.com%2Fcaddyserver%2Fforwardproxy"
     wget -O $TMPFILE $caddyURL && dpkg -i $TMPFILE
-    wget -O $TMPFILE $naivecaddyURL && cp -f $TMPFILE /usr/bin/caddy && chmod +x /usr/bin/caddy
+    #naivecaddyURL="https://caddyserver.com/api/download?os=linux&arch=$(dpkg --print-architecture)&p=github.com%2Fcaddy-dns%2Fcloudflare&p=github.com%2Fmholt%2Fcaddy-l4&p=github.com%2Fimgk%2Fcaddy-trojan&p=github.com%2Fcaddyserver%2Fforwardproxy"
+    #wget -O $TMPFILE $naivecaddyURL && cp -f $TMPFILE /usr/bin/caddy && chmod +x /usr/bin/caddy
+    naivecaddyURL="$(wget -qO- https://api.github.com/repos/lxhao61/integrated-examples/releases | grep -E "browser_download_url.*linux-$(dpkg --print-architecture)\.tar.gz" | cut -f4 -d\" | head -n1)"
+    wget -4 -O $TMPFILE $naivecaddyURL && tar -zxf $TMPFILE -C /usr/bin && chmod +x /usr/bin/caddy
 }
 
 function _config(){
