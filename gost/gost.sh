@@ -5,7 +5,7 @@
 
 [[ $# != 0 ]] && METHOD=$(echo $@) || METHOD="-L=ss://AEAD_AES_128_GCM:$(tr -dc 'a-z0-9A-Z' </dev/urandom | head -c 16)@:$(shuf -i 10000-65535 -n1)"
 
-URL="$(wget -qO- https://api.github.com/repos/ginuerzh/gost/releases/latest | grep -E "browser_download_url.*gost-linux-amd64" | cut -f4 -d\")"
+URL="$(wget -qO- https://api.github.com/repos/ginuerzh/gost/releases/latest | grep -E "browser_download_url.*gost_.*linux_amd64" | cut -f4 -d\")"
 rm -rf /usr/bin/gost
 wget -O - $URL | gzip -d > /usr/bin/gost && chmod +x /usr/bin/gost
 
