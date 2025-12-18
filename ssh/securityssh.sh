@@ -33,7 +33,7 @@ if [[ ${is_confirm} == "y" || ${is_confirm} == "Y" ]]; then
     [[ ! -d "/root/.ssh" ]] && mkdir -p "/root/.ssh" && chmod 700 /root/.ssh
     echo $RSA_PUB_KEY >>/root/.ssh/authorized_keys
     sort -u /root/.ssh/authorized_keys -o /root/.ssh/authorized_keys
-    sed -i "s/PermitRootLogin.*/PermitRootLogin without-password/g" /etc/ssh/sshd_config
+    sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin without-password/' /etc/ssh/sshd_config
     
     # restart ssh
     service ssh restart
