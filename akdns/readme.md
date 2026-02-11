@@ -4,7 +4,7 @@
 
 #### 使用方式
 1. [注册 akile 账号](https://akile.io/register?aff_code=a1e2817f-c626-4f0b-b7ba-afce0951a583)
-2. 在 akile 提供的免费流媒体解锁服务面板添加自己的 VPS 地址 → [控制面板](https://dns.akile.ai/)
+2. 在 akile 提供的免费流媒体解锁服务面板添加自己的 VPS 地址并打开需要解锁的服务 → [控制面板](https://dns.akile.ai/)
 3. 在 VPS 执行以下脚本:
   
 ```bash
