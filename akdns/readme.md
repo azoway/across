@@ -5,12 +5,14 @@
 #### 使用方式
 1. [注册 akile 账号](https://akile.io/register?aff_code=a1e2817f-c626-4f0b-b7ba-afce0951a583)
 2. 在 akile 提供的免费流媒体解锁服务面板添加自己的 VPS 地址 → [控制面板](https://dns.akile.ai/)
-3. 在 VPS 执行以下脚本
+3. 在 VPS 执行以下脚本:
+  
 ```bash
 wget --no-check-certificate -O /etc/akdns-auto.sh https://raw.githubusercontent.com/azoway/across/master/akdns/akdns-auto.sh
 chmod 755 /etc/akdns-auto.sh
-(crontab -l ; echo "0 */2 * * * /etc/akdns-auto.sh") | crontab -
-````
+(crontab -l ; echo "*/2 * * * * /etc/akdns-auto.sh") | crontab -
+bash /etc/akdns-auto.sh
+```
 
 
 ### Auto Speedtest & Apply Best Free Streaming-Unlock DNS
@@ -23,9 +25,10 @@ If all DNS servers time out, it falls back to `DEFAULT_DNS`.
 1.  [Register an akile account](https://akile.io/register?aff_code=a1e2817f-c626-4f0b-b7ba-afce0951a583)
 2.  Add your VPS IP address to the free streaming-unlock DNS panel → [Control Panel](https://dns.akile.ai/)
 3.  Run the following commands on your VPS:
-
+  
 ```bash
 wget --no-check-certificate -O /etc/akdns-auto.sh https://raw.githubusercontent.com/azoway/across/master/akdns/akdns-auto.sh
 chmod 755 /etc/akdns-auto.sh
-(crontab -l ; echo "0 */2 * * * /etc/akdns-auto.sh") | crontab -
+(crontab -l ; echo "*/2 * * * * /etc/akdns-auto.sh") | crontab -
+bash /etc/akdns-auto.sh
 ```
