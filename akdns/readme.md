@@ -10,7 +10,7 @@
 ```bash
 wget --no-check-certificate -O /etc/akdns-auto.sh https://raw.githubusercontent.com/azoway/across/master/akdns/akdns-auto.sh
 chmod 755 /etc/akdns-auto.sh
-(crontab -l ; echo "*/2 * * * * /etc/akdns-auto.sh") | crontab -
+(crontab -l ; echo "*/5 * * * * /etc/akdns-auto.sh") | crontab -
 bash /etc/akdns-auto.sh
 ```
 
@@ -29,6 +29,6 @@ If all DNS servers time out, it falls back to `DEFAULT_DNS`(8.8.8.8,1.1.1.1).
 ```bash
 wget --no-check-certificate -O /etc/akdns-auto.sh https://raw.githubusercontent.com/azoway/across/master/akdns/akdns-auto.sh
 chmod 755 /etc/akdns-auto.sh
-(crontab -l ; echo "*/2 * * * * /etc/akdns-auto.sh") | crontab -
+(crontab -l ; echo "*/5 * * * * /etc/akdns-auto.sh") | crontab -
 bash /etc/akdns-auto.sh
 ```
