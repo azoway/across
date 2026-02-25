@@ -1,52 +1,46 @@
 #!/usr/bin/env bash
-# Usage: debian 10 & 9 && linux-image-cloud-amd64 bbr: 
-#   export qdisc=fq   && bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/kvmbbr/bbr.sh)                        # 仅开启fq+bbr
-#   export qdisc=cake && bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/kvmbbr/bbr.sh)                        # 仅开启cake+bbr
-#   export qdisc=cake && bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/kvmbbr/bbr.sh) cloud                  # 危险操作: 安装cloud内核并开启cake+bbr
-#   export qdisc=cake && bash <(curl -s https://raw.githubusercontent.com/azoway/across/main/kvmbbr/bbr.sh) removeold              # 危险操作: 卸载未使用内核并开启cake+bbr
-###
+## bash <(curl -sSL https://raw.githubusercontent.com/azoway/across/main/kvmbbr/bbr.sh)
+### https://github.com/klzgrad/naiveproxy/wiki/Performance-Tuning
 
-# only root can run this script
-[[ $EUID -ne 0 ]] && echo "Error, This script must be run as root!" && exit 1
+set -euo pipefail
 
-# version stretch || buster
-version=$(cat /etc/os-release | grep -oE "VERSION_ID=\"(11|10)\"" | grep -oE "(11|10)")
-if [[ $version == "11" ]]; then
-    backports_version="bullseye-backports"
-else
-    [[ $version != "10" ]] && echo "Error, OS should be debian bullseye or buster " && exit 1 || backports_version="buster-backports"
+# root check
+if [[ $EUID -ne 0 ]]; then
+  echo "Error: This script must be run as root."
+  exit 1
 fi
 
-# install cloud kernel 
-if [[ "$1" == "cloud" ]]; then
-    cat /etc/apt/sources.list | grep -q "$backports_version" || echo -e "deb http://deb.debian.org/debian $backports_version main" >> /etc/apt/sources.list
-    apt update
-    apt -t $backports_version install linux-image-cloud-amd64 linux-headers-cloud-amd64 -y
-    update-grub
+# OS check
+if [[ ! -r /etc/os-release ]]; then
+  echo "Error: /etc/os-release not found."
+  exit 1
 fi
 
-# remove old kernel  
-if [[ "$1" == "removeold" ]]; then
-    name=$(uname -r | awk -F'-' 'BEGIN { OFS="-" } {print $1,$2}')
-    echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -e "s/.*$(uname -r)//g" -e "s/linux-image-cloud-amd64//g" | tr "\n" " ") | xargs apt --purge -y autoremove
-    echo $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -e "s/.*$name.*//g" -e "s/linux-headers-cloud-amd64//g" | tr "\n" " ") | xargs apt --purge -y autoremove
-    update-grub
+# Debian >= 12
+DEB_VER=$(grep -oP '(?<=^VERSION_ID=")[0-9]+' /etc/os-release || true)
+if [[ -z "${DEB_VER}" || "$DEB_VER" -lt 12 ]]; then
+  echo "Error: Debian version must be >= 12."
+  exit 1
 fi
 
-# bbr 
-sed -i '/net.core.default_qdisc/d' /etc/sysctl.conf
-sed -i '/net.ipv4.tcp_congestion_control/d' /etc/sysctl.conf
-echo "net.core.default_qdisc = ${qdisc:=fq}" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.conf
-echo $(date) /etc/sysctl.conf info:
-sysctl -p
+# Write sysctl.d file (modular; does not touch /etc/sysctl.conf)
+mkdir -p /etc/sysctl.d
+cat > /etc/sysctl.d/99-azoway-bbr.conf <<'EOF'
+net.core.default_qdisc              = fq
+net.ipv4.tcp_congestion_control     = bbr
+net.ipv4.tcp_slow_start_after_idle  = 0
+net.ipv4.tcp_notsent_lowat          = 131072
+net.ipv4.tcp_rmem                   = 4096 131072 67108864
+net.ipv4.tcp_wmem                   = 4096 131072 67108864
+EOF
 
-# end
-if [[ "$1" == "cloud" ]]; then
-    read -p "The system needs to reboot. Do you want to restart system? [y/n]" is_reboot
-    if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
-        echo "Rebooting..." && reboot
-    else
-        echo "Reboot has been canceled..." && exit 0
-    fi
-fi
+# Ensure modules available (harmless if built-in)
+mkdir -p /etc/modules-load.d
+printf "tcp_bbr\nsch_fq\n" > /etc/modules-load.d/bbr-fq.conf
+modprobe tcp_bbr 2>/dev/null || true
+modprobe sch_fq  2>/dev/null || true
+
+# Load only this file to avoid extra noise/overrides
+sysctl -p /etc/sysctl.d/99-azoway-bbr.conf
+
+echo "BBR + fq applied (loaded: /etc/sysctl.d/99-azoway-bbr.conf). Done."
