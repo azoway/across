@@ -14,13 +14,13 @@
       20103/bing.com/443
       20104-20108/1.1.1.1/443
       30000-30108/www.example.com/30000-30108
-4. 脚本运行后规则立即生效，重启后失效，可使用定时任务周期执行此脚本，或者在脚本运行完毕后使用下面命令保存规则:
-   4.1. 适合目标为固定IP的转发
+4. 脚本运行后规则立即生效,重启后失效,可选择以下以下其中一种方式来持久化:
+   4.1 适合目标为固定IP的转发,脚本运行完毕后使用下面命令保存规则:
       echo '#!/usr/sbin/nft -f' >/etc/nftables.conf
       echo 'flush ruleset' >>/etc/nftables.conf
       nft list ruleset >>/etc/nftables.conf
       systemctl restart nftables
-   4.1. 适合目标含有域名的转发,当 IP 变化时重新执行脚本即可，推荐使用定时任务:
+   4.2 适合目标含有域名的转发,当 IP 变化时重新执行脚本即可，推荐使用定时任务:
       wget --no-check-certificate -O /opt/nft-nat.sh https://raw.githubusercontent.com/azoway/across/main/nftables/nft-nat.sh
       chmod 755 /opt/nft-nat.sh
       (crontab -l 2>/dev/null; echo "5 * * * * /opt/nft-nat.sh") | crontab -
